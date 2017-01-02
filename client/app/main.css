@@ -1,0 +1,103 @@
+body{
+	background: linear-gradient(#001122,#000);
+	height: 100vh;
+}
+
+header{
+	background: black;
+	text-align: center;
+	font-size: 20px;
+	padding: 20px 0;
+	color: #aaa;
+}
+
+.stream-container{
+	position: relative;
+	border: 10px solid #777;
+	text-align: center;
+	background: black;
+}
+
+#localVideo{
+   position: absolute; 
+   bottom: 5px;
+   right: 0px;
+   width: 200px;
+   height: 150px;
+   background: red;
+   border-radius: 20px;
+}
+
+#remoteVideo{
+	width: 800px;
+	height: 600px;
+	background: black;
+	border-radius: 20px;
+}
+.mn-gif-content{
+	position: absolute;
+	bottom: 200px;
+	right: 300px;
+	font-size: 20px;
+	color: #aaa;
+}
+
+.mn-video-icon{
+ font-size: 40px !important;
+ line-height: 40px;
+ color: #999;
+}
+
+.mn-video-icon:hover{
+ cursor: pointer;
+ color: red;
+}
+
+.list-name{
+	line-height: 40px;
+	text-transform: capitalize;
+	font-weight: bold;
+	font-size: 17px;
+}
+
+.list-item{
+	background: #333;
+	color: white;
+	padding: 10px 0;
+	border-bottom: 2px solid #555;
+}
+
+.mn-nouser{
+	color:red;
+	text-align: center;
+	font-size: 30px;
+}
+
+.mn-conference-option{
+	color: white;
+}
+.mn-conference-option:hover{
+	color: blue;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.mn-online-users{
+	background-color: white;
+}
+
+.mn-room{
+	color: red;
+}
+
+.mn-room span{
+   float: right;
+
+}
+
+.mn-room span:hover{
+   color: blue;
+   cursor: pointer;
+   text-decoration: underline;
+   
+}

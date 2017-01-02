@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Live Talk</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1">
+   <link rel="stylesheet" type="text/css" href="bootstrap.css">
+   <link rel="stylesheet" type="text/css" href="app/main.css">
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+   <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+   <script type="text/javascript" src="app/main.controller.js"></script>
+   <script type="text/javascript" src="app/peer.js"></script>
+   <script type="text/javascript" src="socket.io.js"></script>
+</head>
+
+
+
+<body ng-app = "webRtc"  ng-controller = 'mainController'>
+
+<header>Welcome To Web RTC Zone</header>
+   <div class="mn-nouser" ng-if = 'noUserMessage'>
+        <p>Oops!<br> No Users Available For Video Confrence</p>
+   </div>
+
+      <div class = 'container-fluid'>
+         
+        <div  style = 'margin:auto;margin-top: 30px'>
+           <form ng-show = 'login' ng-submit = 'logIn()' style = 'margin:auto;width:30%'>
+               <input type="text" placeholder="user name" ng-model="model.userName" class="form-control" ng-focus = "hideUserNameErrorMssage()">
+               <p ng-if = 'userNameError' ng-bind = 'userNameErrorMessage' style = "color:red"></p>
+               <button type='submit' class = 'btn btn-success form-control' >Submit</button>
+           </form>
+        </div>
+
+
+
+         <div class = 'row'>
+            <div class = 'col-md-2' ng-if = 'loggedIn'>
+                  <div class="row list-item" ng-repeat = 'user in users'>
+                      <div class="col-md-8 list-name">
+                          {{user.name}}
+                      </div>
+                      <div class="col-md-4">
+                           <i class="fa fa-video-camera mn-video-icon" ng-click = 'selectUser(user)' aria-hidden=" true"></i>
+                      </div>
+                  </div>
+                  <br>
+
+                  <div ng-repeat = "room in rooms">
+                      <p class="mn-room">{{room.name}} <span ng-click = "joinRoom(room)">Join</span></p>
+                  </div>
+
+                  <p class="mn-conference-option" ng-click = "wantToCreateRoom()">Create a conference</p>
+                  <!--For multichat video conference-->
+                  <div ng-if = "needRoom">
+                      <input type="text" placeholder="Event name" ng-model = "model.roomName" ng-focus = "model.noRoomNameErrorMessage = false">
+                      <p ng-if = "model.noRoomNameErrorMessage"  style = "color:red">Name the platform</p>
+                      <button ng-click = "showListOfOnlineUsers()">Invite member</button>
+                      <button ng-click = "cancelRequest()">Cancel</button>
+                      <div ng-if = "showList" class="mn-online-users">
+                           <div ng-repeat = 'user in users'>
+                             {{user.name}}
+                             <input type="checkbox" ng-model = "isAdded" ng-change = "addToConference(user)" />
+                           </div>
+                           <button ng-click = "createRoom()">Confirm</button>
+                      </div>
+                  </div>
+                  <!--End line for multichat video conference-->
+
+        	  </div>
+           
+            <div class = 'col-md-7' ng-if = 'startChat'>
+                <div class="row stream-container">
+                    <video id="localVideo" autoplay></video>
+                       <div ng-if = 'offerReceive' class="mn-gif-content">
+                           <img src="ripple.gif" />
+                           <p>{{name}} is calling....</p>
+
+                       </div>
+                    <video id="remoteVideo" autoplay></video>
+                 </div>
+                      <button ng-model = 'remoteEvent' ng-click = 'hangUp(remoteEvent)' class = 'btn btn-success' ng-if = "remoteCall">Answer</button>
+                      <button ng-click = 'close()' class = 'btn btn-danger' ng-if = "remoteCall">Disconnect</button>
+            </div>
+        </div>
+
+
+      </div>
+
+    <script>
+        var socket = io('/chat');
+    </script>
+
+
+</body>
+</html>
